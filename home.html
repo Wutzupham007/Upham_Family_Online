@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — The Upham Family</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, #3d2b1f 0%, #7a5c44 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c4a882' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      color: #f5f0e8;
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .hero h1 span { color: #d4a84b; }
+
+    .hero p {
+      color: #c4a882;
+      font-style: italic;
+      font-size: 1.15rem;
+      position: relative;
+    }
+
+    .flags {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      position: relative;
+    }
+
+    .flag-item {
+      color: #c4a882;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .flag-item span:first-child { font-size: 2rem; }
+
+    /* Welcome card */
+    .welcome-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .welcome-section { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+
+    .welcome-text h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #3d2b1f;
+    }
+
+    .welcome-text p {
+      color: #5a3e2b;
+      margin-bottom: 1rem;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .quick-link-card {
+      background: var(--warm-white);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 3px 15px var(--shadow);
+      border: 1px solid rgba(196, 168, 130, 0.3);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .quick-link-card:hover {
+      transform: translateX(6px);
+      box-shadow: 0 6px 25px var(--shadow);
+      border-color: var(--gold);
+    }
+
+    .quick-link-card .icon {
+      font-size: 2rem;
+      width: 50px;
+      text-align: center;
+    }
+
+    .quick-link-card h3 {
+      font-size: 1.1rem;
+      color: #3d2b1f;
+      margin-bottom: 0.15rem;
+    }
+
+    .quick-link-card p {
+      font-size: 0.85rem;
+      color: #8a6a52;
+    }
+
+    /* Recent updates preview */
+    .section-title {
+      font-size: 1.8rem;
+      color: #3d2b1f;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #c4a882;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .update-preview {
+      background: var(--warm-white);
+      border-radius: 10px;
+      padding: 1.5rem;
+      border-left: 4px solid var(--terracotta);
+      box-shadow: 0 3px 15px var(--shadow);
+      margin-bottom: 1rem;
+    }
+
+    .update-preview .date {
+      font-size: 0.8rem;
+      color: #8a6a52;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+
+    .update-preview h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .update-preview p {
+      color: #5a3e2b;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">The <span>Upham</span> Family</div>
+    <ul class="nav-links">
+      <li><a href="home.html" class="active">🏠 Home</a></li>
+      <li><a href="about.html">👨‍👩‍👧‍👦 About Us</a></li>
+      <li><a href="blog.html">📝 Family Blog</a></li>
+      <li><a href="index.html">🔒 Lock</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <span class="hero-icon">🏡</span>
+    <h1>Welcome, <span>Uphams!</span></h1>
+    <p>Your little corner of the internet — wherever in the world you are</p>
+    <div class="flags">
+      <div class="flag-item"><span>🇺🇸</span><span>USA</span></div>
+      <div class="flag-item"><span>🇬🇧</span><span>United Kingdom</span></div>
+      <div class="flag-item"><span>🇮🇱</span><span>Israel</span></div>
+    </div>
+  </div>
+
+  <main>
+
+    <div class="welcome-section">
+      <div class="welcome-text card">
+        <h2>Our Family Space</h2>
+        <p>Welcome to the Upham Family website — a private space for us to stay connected across the miles. Whether you're catching up on news, reading about family members, or just feeling close to home, this is the place for it.</p>
+        <p>Have a look around, and enjoy!</p>
+        <br>
+        <a href="about.html" class="btn btn-primary">Meet the Family →</a>
+      </div>
+
+      <div class="quick-links">
+        <a href="about.html" class="quick-link-card">
+          <div class="icon">👨‍👩‍👧‍👦</div>
+          <div>
+            <h3>About Us</h3>
+            <p>Get to know each member of the Upham family</p>
+          </div>
+        </a>
+        <a href="blog.html" class="quick-link-card">
+          <div class="icon">📝</div>
+          <div>
+            <h3>Family Blog</h3>
+            <p>Latest news, updates, and stories from the family</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Updates -->
+    <h2 class="section-title">📰 Latest Updates</h2>
+
+    <div class="update-preview">
+      <div class="date">February 2026</div>
+      <h3>Welcome to our new family website!</h3>
+      <p>We've finally got our own little corner of the internet. This is the place to stay connected — check back regularly for news and updates from across the family. More content coming soon!</p>
+    </div>
+
+    <div class="update-preview">
+      <div class="date">February 2026</div>
+      <h3>About Us page is live</h3>
+      <p>Head over to the About Us section to learn more about each member of the Upham family. We'll be adding photos and stories over time.</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Made with ❤️ for <span>The Upham Family</span> · 🇺🇸 USA · 🇬🇧 UK · 🇮🇱 Israel</p>
+  </footer>
+
+</body>
+</html>

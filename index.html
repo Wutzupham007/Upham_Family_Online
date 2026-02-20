@@ -1,12 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Family Site</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Upham Family</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Background image - blurred by default */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: url('images/family-photo.jpg') center/cover no-repeat;
+      filter: blur(12px) brightness(0.6);
+      transform: scale(1.1); /* prevents blur edge artifacts */
+      transition: filter 1.5s ease;
+      z-index: 0;
+    }
+
+    /* Fallback warm gradient if no image */
+    .bg-fallback {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #3d2b1f 0%, #7a5c44 50%, #c4714a 100%);
+      z-index: -1;
+    }
+
+    .bg.unlocked {
+      filter: blur(0px) brightness(0.75);
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 15, 5, 0.45);
+      z-index: 1;
+    }
+
+    /* Login Box */
+    .login-box {
+      position: relative;
+      z-index: 2;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(4px);
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      border: 1px solid rgba(212, 168, 75, 0.4);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .crest {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-box h1 {
+      font-family: 'Playfair Display', serif;
+      color: #3d2b1f;
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-box .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #7a5c44;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #c4a882, transparent);
+      margin: 1.5rem 0;
+    }
+
+    .login-box label {
+      display: block;
+      color: #5a3e2b;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 2px solid #c4a882;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.8);
+      color: #3d2b1f;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
+      margin-bottom: 1rem;
+    }
+
+    .login-box input:focus {
+      border-color: #d4a84b;
+      box-shadow: 0 0 0 3px rgba(212, 168, 75, 0.2);
+    }
+
+    .login-box input.error {
+      border-color: #c4714a;
+      box-shadow: 0 0 0 3px rgba(196, 113, 74, 0.2);
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    .btn-enter {
+      width: 100%;
+      padding: 0.9rem;
+      background: #c4714a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-enter:hover {
+      background: #e8956d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(196, 113, 74, 0.4);
+    }
+
+    .error-msg {
+      color: #c4714a;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      min-height: 1.2rem;
+      transition: opacity 0.3s ease;
+    }
+
+    .welcome-msg {
+      display: none;
+      color: #7a5c44;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .locations {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .location-tag {
+      font-size: 0.78rem;
+      color: #8a6a52;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      letter-spacing: 0.5px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>Our family website is coming soon!</p>
+
+  <div class="bg-fallback"></div>
+  <div class="bg" id="bg"></div>
+  <div class="overlay"></div>
+
+  <div class="login-box">
+    <div class="crest">🏡</div>
+    <h1>The Upham Family</h1>
+    <p class="subtitle">A private family space — welcome home</p>
+
+    <div class="divider-line"></div>
+
+    <label for="password">Enter Family Password</label>
+    <input 
+      type="password" 
+      id="password" 
+      placeholder="••••••••••••••••" 
+      onkeydown="if(event.key==='Enter') checkPassword()"
+    />
+    <button class="btn-enter" onclick="checkPassword()">Enter ›</button>
+    <p class="error-msg" id="error-msg"></p>
+    <p class="welcome-msg" id="welcome-msg">Welcome home, Uphams! Taking you inside...</p>
+
+    <div class="divider-line"></div>
+
+    <div class="locations">
+      <span class="location-tag">🇺🇸 USA</span>
+      <span class="location-tag">🇬🇧 United Kingdom</span>
+      <span class="location-tag">🇮🇱 Israel</span>
+    </div>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const input = document.getElementById('password');
+      const errorMsg = document.getElementById('error-msg');
+      const welcomeMsg = document.getElementById('welcome-msg');
+      const bg = document.getElementById('bg');
+
+      if (input.value === 'Uphams_Online_007') {
+        // Unblur background
+        bg.classList.add('unlocked');
+
+        // Show welcome message
+        welcomeMsg.style.display = 'block';
+        errorMsg.textContent = '';
+        input.style.display = 'none';
+        document.querySelector('.btn-enter').style.display = 'none';
+        document.querySelector('label').style.display = 'none';
+
+        // Redirect after a moment
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 2000);
+
+      } else {
+        // Show error and shake
+        errorMsg.textContent = 'Incorrect password. Please try again.';
+        input.classList.add('error');
+        input.value = '';
+        setTimeout(() => input.classList.remove('error'), 500);
+      }
+    }
+  </script>
+
 </body>
 </html>
